@@ -21,6 +21,21 @@ const NewBugPage = () => {
     })
     const [error, setError] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            setIsSubmitting(true)
+            const res = await axios.post('/api/bugs', data)
+            router.push('/bugs')
+        } catch (error) {
+            setError('An unexpected error was occuerd')
+            setIsSubmitting(false)
+            console.error(error)
+        }
+    })
+
+
+
     return (
         <div className='max-w-xl'>
             {error && <Callout.Root className='mb-5' color='red'>
@@ -28,17 +43,7 @@ const NewBugPage = () => {
             </Callout.Root>}
             <form
                 className='max-w-xl space-y-3'
-                onSubmit={handleSubmit(async (data) => {
-                    try {
-                        setIsSubmitting(true)
-                        const res = await axios.post('/api/bugs', data)
-                        router.push('/bugs')
-                    } catch (error) {
-                        setError('An unexpected error was occuerd')
-                        setIsSubmitting(false)
-                        console.error(error)
-                    }
-                })}>
+                onSubmit={onSubmit}>
                 <TextField.Root>
                     <TextField.Input placeholder='Title' {...register('title')}>
                     </TextField.Input>
