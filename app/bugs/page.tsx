@@ -4,6 +4,7 @@ import BugToolbar from './BugToolbar'
 import prisma from '@/prisma/client'
 import BugStatusBadge from '../components/BugStatusBadge'
 import delay from 'delay'
+import Link from 'next/link'
 
 const BugsPage = async () => {
     const bugs = await prisma.bug.findMany({})
@@ -22,7 +23,9 @@ const BugsPage = async () => {
                     return (
                         <Table.Row key={bug.id}>
                             <TableCell>
-                                {bug.title}
+                                <Link href={`/bugs/${bug.id}`}>
+                                    {bug.title}
+                                </Link>
                                 <div className='block md:hidden'>{bug.status}</div>
                             </TableCell>
                             <TableCell className='hidden md:table-cell'>
