@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { createBugSchema } from '@/app/validationSchemas';
 import { z } from 'zod'
 import ErrorMessage from '@/app/components/ErrorMessage';
+import Spinner from '@/app/components/Spinner';
 
 type BugForm = z.infer<typeof createBugSchema>
 
@@ -19,6 +20,7 @@ const NewBugPage = () => {
         resolver: zodResolver(createBugSchema)
     })
     const [error, setError] = useState('')
+    const [isSubmitting, setIsSubmitting] = useState(false)
     return (
         <div className='max-w-xl'>
             {error && <Callout.Root className='mb-5' color='red'>
@@ -28,10 +30,12 @@ const NewBugPage = () => {
                 className='max-w-xl space-y-3'
                 onSubmit={handleSubmit(async (data) => {
                     try {
+                        setIsSubmitting(true)
                         const res = await axios.post('/api/bugs', data)
                         router.push('/bugs')
                     } catch (error) {
                         setError('An unexpected error was occuerd')
+                        setIsSubmitting(false)
                         console.error(error)
                     }
                 })}>
@@ -56,7 +60,7 @@ const NewBugPage = () => {
                     {errors.description?.message}
                 </ErrorMessage>
 
-                <Button>Submit New Bug</Button>
+                <Button disabled={isSubmitting}>Submit New Bug {isSubmitting && <Spinner />}</Button>
             </form>
         </div>
     )
