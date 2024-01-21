@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Table, TableCell, TableHeader } from '@radix-ui/themes'
 import Link from 'next/link'
 import prisma from '@/prisma/client'
+import BugStatusBadge from '../components/BugStatusBadge'
 
 const BugsPage = async () => {
     const bugs = await prisma.bug.findMany({})
@@ -27,7 +28,9 @@ const BugsPage = async () => {
                                 {bug.title}
                                 <div className='block md:hidden'>{bug.status}</div>
                             </TableCell>
-                            <TableCell className='hidden md:table-cell'>{bug.status}</TableCell>
+                            <TableCell className='hidden md:table-cell'>
+                                <BugStatusBadge status={bug.status} />
+                            </TableCell>
                             <TableCell className='hidden md:table-cell'>{bug.createdAt.toDateString()}</TableCell>
                         </Table.Row>)
                 })}</Table.Body>
