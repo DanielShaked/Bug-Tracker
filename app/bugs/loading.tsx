@@ -1,14 +1,14 @@
+import { Table, TableCell } from '@radix-ui/themes'
 import React from 'react'
-import { Button, Table, TableCell, TableHeader } from '@radix-ui/themes'
-import BugToolbar from './BugToolbar'
-import prisma from '@/prisma/client'
 import BugStatusBadge from '../components/BugStatusBadge'
-import delay from 'delay'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import BugToolbar from './BugToolbar'
 
-const BugsPage = async () => {
-    const bugs = await prisma.bug.findMany({})
-    await delay(2000)
 
+const LoadingBugsPage = () => {
+
+    const dummyBugs = [1, 2, 3, 4, 5]
     return (
         <div>
             <BugToolbar />
@@ -18,22 +18,25 @@ const BugsPage = async () => {
                     <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
                     <Table.ColumnHeaderCell className='hidden md:table-cell'>Created</Table.ColumnHeaderCell>
                 </Table.Header>
-                <Table.Body>{bugs.map(bug => {
+                <Table.Body>{dummyBugs.map(bug => {
                     return (
-                        <Table.Row key={bug.id}>
+                        <Table.Row key={bug}>
                             <TableCell>
-                                {bug.title}
-                                <div className='block md:hidden'>{bug.status}</div>
+                                <Skeleton />
+                                <div className='block md:hidden'>
+                                    <Skeleton />
+                                </div>
                             </TableCell>
                             <TableCell className='hidden md:table-cell'>
-                                <BugStatusBadge status={bug.status} />
+                                <Skeleton />
                             </TableCell>
-                            <TableCell className='hidden md:table-cell'>{bug.createdAt.toDateString()}</TableCell>
+                            <TableCell className='hidden md:table-cell'>
+                                <Skeleton />
+                            </TableCell>
                         </Table.Row>)
                 })}</Table.Body>
-            </Table.Root>
-        </div>
+            </Table.Root></div>
     )
 }
 
-export default BugsPage
+export default LoadingBugsPage
