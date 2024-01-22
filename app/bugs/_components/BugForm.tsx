@@ -3,7 +3,7 @@ import { Button, Callout, TextField } from '@radix-ui/themes';
 // import dynamic from 'next/dynamic';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
-import { createBugSchema } from '@/app/validationSchemas';
+import { bugSchema } from '@/app/validationSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import "easymde/dist/easymde.min.css";
@@ -18,12 +18,12 @@ import { Bug } from '@prisma/client';
 //     ssr: false
 // })
 
-type BugFormData = z.infer<typeof createBugSchema>
+type BugFormData = z.infer<typeof bugSchema>
 
 const BugForm = ({ bug }: { bug?: Bug }) => {
     const router = useRouter()
     const { register, control, handleSubmit, formState: { errors } } = useForm<BugFormData>({
-        resolver: zodResolver(createBugSchema)
+        resolver: zodResolver(bugSchema)
     })
     const [error, setError] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
