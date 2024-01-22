@@ -25,7 +25,7 @@ const NewBugPage = () => {
     const onSubmit = handleSubmit(async (data) => {
         try {
             setIsSubmitting(true)
-            const res = await axios.post('/api/bugs', data)
+            await axios.post('/api/bugs', data)
             router.push('/bugs')
         } catch (error) {
             setError('An unexpected error was occuerd')

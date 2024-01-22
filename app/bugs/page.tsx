@@ -7,7 +7,7 @@ import delay from 'delay'
 import Link from 'next/link'
 
 const BugsPage = async () => {
-    const bugs = await prisma.bug.findMany({})
+    const bugs = await prisma.bug.findMany()
     await delay(2000)
 
     return (
@@ -15,9 +15,11 @@ const BugsPage = async () => {
             <BugToolbar />
             <Table.Root variant='surface'>
                 <Table.Header>
-                    <Table.ColumnHeaderCell>Bug</Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
-                    <Table.ColumnHeaderCell className='hidden md:table-cell'>Created</Table.ColumnHeaderCell>
+                    <Table.Row>
+                        <Table.ColumnHeaderCell>Bug</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell className='hidden md:table-cell'>Created</Table.ColumnHeaderCell>
+                    </Table.Row>
                 </Table.Header>
                 <Table.Body>{bugs.map(bug => {
                     return (
