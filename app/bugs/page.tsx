@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Table, TableCell, TableHeader } from '@radix-ui/themes'
+import { Table, TableCell } from '@radix-ui/themes'
+import Link from '../components/Link'
 import BugToolbar from './BugToolbar'
 import prisma from '@/prisma/client'
 import BugStatusBadge from '../components/BugStatusBadge'
 import delay from 'delay'
-import Link from 'next/link'
 
 const BugsPage = async () => {
     const bugs = await prisma.bug.findMany()
@@ -25,6 +25,7 @@ const BugsPage = async () => {
                     return (
                         <Table.Row key={bug.id}>
                             <TableCell>
+
                                 <Link href={`/bugs/${bug.id}`}>
                                     {bug.title}
                                 </Link>
