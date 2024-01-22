@@ -31,7 +31,10 @@ const BugForm = ({ bug }: { bug?: Bug }) => {
     const onSubmit = handleSubmit(async (data) => {
         try {
             setIsSubmitting(true)
-            await axios.post('/api/bugs', data)
+            if (bug)
+                axios.patch(`/api/bugs/${bug.id}`, data)
+            else
+                await axios.post('/api/bugs', data)
             router.push('/bugs')
         } catch (error) {
             setError('An unexpected error was occuerd')
@@ -72,7 +75,12 @@ const BugForm = ({ bug }: { bug?: Bug }) => {
                     {errors.description?.message}
                 </ErrorMessage>
 
-                <Button disabled={isSubmitting}>Submit New Bug {isSubmitting && <Spinner />}</Button>
+                <Button
+                    disabled={isSubmitting}>
+                    {bug ? 'Update Bug' : 'Submit New Bug'}
+                    {' '}
+                    {isSubmitting && <Spinner />}
+                </Button>
             </form>
         </div>
     )
