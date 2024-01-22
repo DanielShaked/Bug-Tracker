@@ -1,8 +1,5 @@
+import { Skeleton } from '@/app/components'
 import { Table, TableCell } from '@radix-ui/themes'
-import React from 'react'
-import BugStatusBadge from '../components/BugStatusBadge'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 import BugToolbar from './BugToolbar'
 
 
