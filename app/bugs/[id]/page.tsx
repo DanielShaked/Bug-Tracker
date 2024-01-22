@@ -1,13 +1,15 @@
 import React from 'react'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
+import { Card, Flex, Heading, Text } from '@radix-ui/themes'
+import BugStatusBadge from '@/app/components/BugStatusBadge'
 
 interface Props {
     params: { id: string }
 }
 
 const BugDetailPage = async ({ params }: Props) => {
-    if (typeof params.id !== 'number')
+    if (typeof +params.id !== 'number')
         notFound()
 
     const bug = await prisma.bug.findUnique({
@@ -21,10 +23,14 @@ const BugDetailPage = async ({ params }: Props) => {
 
     return (
         <div>
-            <p>{bug.title}</p>
-            <p>{bug.description}</p>
-            <p>{bug.status}</p>
-            <p>{bug.updatedAt.toDateString()}</p>
+            <Heading>{bug.title}</Heading>
+            <Flex my='2' className='space-x-3'>
+                <BugStatusBadge status={bug.status}></BugStatusBadge>
+                <Text>{bug.description}</Text>
+            </Flex>
+            <Card>
+                <p>{bug.updatedAt.toDateString()}</p>
+            </Card>
         </div>
     )
 }
