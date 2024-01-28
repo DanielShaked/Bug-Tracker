@@ -2,8 +2,7 @@ import { Box } from '@radix-ui/themes'
 import React from 'react'
 import { Skeleton } from '@/app/components'
 
-
-const LoadingNewBugPage = () => {
+const BugFormSkeleton = () => {
     return (
         <Box className='max-w-xl'>
             <Skeleton height='2rem' />
@@ -12,4 +11,4 @@ const LoadingNewBugPage = () => {
     )
 }
 
-export default LoadingNewBugPage
+export default BugFormSkeleton

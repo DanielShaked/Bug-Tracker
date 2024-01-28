@@ -13,6 +13,7 @@ import { Controller, useForm } from 'react-hook-form';
 import SimpleMDE from "react-simplemde-editor";
 import { z } from 'zod';
 import { Bug } from '@prisma/client';
+import SimpleMde from 'react-simplemde-editor';
 
 // const SimpleMde = dynamic(() => import('react-simplemde-editor'), {
 //     ssr: false

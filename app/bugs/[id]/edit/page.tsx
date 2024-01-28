@@ -1,7 +1,16 @@
 import React from 'react'
-import BugForm from '../../_components/BugForm'
 import prisma from "@/prisma/client";
 import { notFound } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+
+const BugForm = dynamic(
+    () => import('@/app/bugs/_components/BugForm'),
+    {
+        ssr: false,
+        loading: () => <p>Loading...</p>
+    }
+)
 
 interface Props {
     params: { id: string }
