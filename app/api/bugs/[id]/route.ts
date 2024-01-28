@@ -53,5 +53,5 @@ export async function DELETE(
         }
     })
 
-    NextResponse.json({})
+    return NextResponse.json({})
 }
