@@ -5,12 +5,10 @@ import React from 'react'
 
 const EditBugButton = ({ bugId }: { bugId: number }) => {
     return (
-        <Box>
-            <Button>
-                <Pencil2Icon />
-                <Link href={`/bugs/${bugId}/edit`}>Edit Bug</Link>
-            </Button>
-        </Box>
+        <Button>
+            <Pencil2Icon />
+            <Link href={`/bugs/${bugId}/edit`}>Edit Bug</Link>
+        </Button>
     )
 }
 
