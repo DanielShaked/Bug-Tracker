@@ -14,7 +14,7 @@ const DeleteBugButton = ({ bugId }: { bugId: number }) => {
         try {
             setIsDeleting(true)
             await axios.delete(`/api/bugs/${bugId}`)
-            router.push('/bugs')
+            router.push('/bugs/list')
             router.refresh()
         }
         catch (error) {

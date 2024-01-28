@@ -36,7 +36,7 @@ const BugForm = ({ bug }: { bug?: Bug }) => {
                 axios.patch(`/api/bugs/${bug.id}`, data)
             else
                 await axios.post('/api/bugs', data)
-            router.push('/bugs')
+            router.push('/bugs/list')
             router.refresh()
         } catch (error) {
             setError('An unexpected error was occuerd')
