@@ -36,6 +36,7 @@ const BugForm = ({ bug }: { bug?: Bug }) => {
             else
                 await axios.post('/api/bugs', data)
             router.push('/bugs')
+            router.refresh()
         } catch (error) {
             setError('An unexpected error was occuerd')
             setIsSubmitting(false)
