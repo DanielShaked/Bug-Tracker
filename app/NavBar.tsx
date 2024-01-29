@@ -5,11 +5,12 @@ import React from 'react'
 import { AiOutlineBug } from "react-icons/ai";
 import classnames from 'classnames'
 import { useSession } from 'next-auth/react'
-import { Box, Flex, Container } from '@radix-ui/themes';
+import { Text, Box, Flex, Container, DropdownMenu, Avatar } from '@radix-ui/themes';
 
 const NavBar = () => {
     const pathName = usePathname()
-    const { status, data } = useSession()
+    const session = useSession()
+    console.log('session', session)
     // console.log('pathName', pathName)
 
     const links = [
@@ -18,7 +19,7 @@ const NavBar = () => {
 
     ]
     return (
-        <nav className='border-b mb-5 px-5 h-14 '>
+        <nav className='border-b mb-5 px-5 py-3 '>
             <Container>
                 <Flex justify='between'>
                     <Flex align='center' gap='3'>
@@ -40,9 +41,28 @@ const NavBar = () => {
 
                         </ul>
                     </Flex>
-                    <Box>
-                        {status === 'authenticated' && <Link href='/api/auth/signout'>Log Out</Link>}
-                        {status === 'unauthenticated' && <Link href='/api/auth/signin'>Login</Link>}
+                    <Box >
+                        {session.status === 'authenticated' &&
+                            <DropdownMenu.Root>
+                                <DropdownMenu.Trigger>
+                                    <Avatar
+                                        src={session.data?.user?.image!}
+                                        fallback='?'
+                                        size='2'
+                                        radius='full'
+                                        className='cursor-pointer'
+                                    />
+                                </DropdownMenu.Trigger>
+                                <DropdownMenu.Content>
+                                    <DropdownMenu.Label>
+                                        <Text size='2'>
+                                            {session.data?.user!.email}
+                                        </Text>
+                                    </DropdownMenu.Label>
+                                </DropdownMenu.Content>
+                            </DropdownMenu.Root>
+                        }
+                        {session.status === 'unauthenticated' && <Link href='/api/auth/signin'>Login</Link>}
                     </Box>
                 </Flex>
             </Container>
