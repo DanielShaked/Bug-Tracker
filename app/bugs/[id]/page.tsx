@@ -7,6 +7,7 @@ import BugDetails from './BugDetails'
 import DeleteBugButton from './DeleteBugButton'
 import { getServerSession } from 'next-auth'
 import authOptions from '@/app/api/auth/authOptions'
+import AssigneeSelect from './AssigneeSelect'
 
 interface Props {
     params: { id: string }
@@ -31,6 +32,7 @@ const BugDetailPage = async ({ params }: Props) => {
             </Box>
             {session && <Box>
                 <Flex direction='column' gap='4' >
+                    <AssigneeSelect />
                     <EditBugButton bugId={bug.id} />
                     <DeleteBugButton bugId={bug.id} />
                 </Flex>
