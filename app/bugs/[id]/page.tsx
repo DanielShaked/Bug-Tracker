@@ -5,12 +5,15 @@ import { Box, Flex, Grid } from '@radix-ui/themes'
 import EditBugButton from './EditBugButton'
 import BugDetails from './BugDetails'
 import DeleteBugButton from './DeleteBugButton'
+import { getServerSession } from 'next-auth'
+import authOptions from '@/app/api/auth/authOptions'
 
 interface Props {
     params: { id: string }
 }
 
 const BugDetailPage = async ({ params }: Props) => {
+    const session = await getServerSession(authOptions)
 
     const bug = await prisma.bug.findUnique({
         where: {
@@ -26,10 +29,12 @@ const BugDetailPage = async ({ params }: Props) => {
             <Box className='md:col-span-4'>
                 <BugDetails bug={bug} />
             </Box>
-            <Flex direction='column' gap='4' >
-                <EditBugButton bugId={bug.id} />
-                <DeleteBugButton bugId={bug.id} />
-            </Flex>
+            {session && <Box>
+                <Flex direction='column' gap='4' >
+                    <EditBugButton bugId={bug.id} />
+                    <DeleteBugButton bugId={bug.id} />
+                </Flex>
+            </Box>}
         </Grid >
     )
 }
