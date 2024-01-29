@@ -59,6 +59,9 @@ const NavBar = () => {
                                             {session.data?.user!.email}
                                         </Text>
                                     </DropdownMenu.Label>
+                                    <DropdownMenu.Item>
+                                        <Link href='/api/auth/logout'>Logout</Link>
+                                    </DropdownMenu.Item>
                                 </DropdownMenu.Content>
                             </DropdownMenu.Root>
                         }
