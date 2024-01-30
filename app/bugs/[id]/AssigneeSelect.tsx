@@ -1,11 +1,11 @@
 'use client'
 import { Skeleton } from '@/app/components'
-import { User } from '@prisma/client'
+import { Bug, User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
-const AssigneeSelect = () => {
+const AssigneeSelect = ({ bug }: { bug: Bug }) => {
 
     const { data: users, error, isLoading } = useQuery<User[]>({
         queryKey: ['users'],
@@ -19,18 +19,19 @@ const AssigneeSelect = () => {
     if (isLoading) return <Skeleton />
 
     return (
-        <Select.Root>
+        <Select.Root defaultValue={bug.assignedToUserId || 'unset'} onValueChange={async (userId) => {
+            await axios.patch(`/api/bugs/${bug.id}`, { assignedToUserId: (userId !== 'unset') ? userId : null })
+        }}>
             <Select.Trigger placeholder='Assign...'></Select.Trigger>
             <Select.Content>
                 <Select.Group>
                     <Select.Label>Suggestions</Select.Label>
+                    <Select.Item value='unset'>Unassigned</Select.Item>
                     {users && users.map(user => {
                         return (
                             <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
                         )
                     })}
-                    <Select.Item value='1'>Daniel Shaked</Select.Item>
-                    <Select.Item value='1'>Yuval Hayoon</Select.Item>
                 </Select.Group>
             </Select.Content>
         </Select.Root>
