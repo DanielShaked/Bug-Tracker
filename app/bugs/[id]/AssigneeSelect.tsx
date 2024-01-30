@@ -8,12 +8,15 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const AssigneeSelect = ({ bug }: { bug: Bug }) => {
 
-    const { data: users, error, isLoading } = useQuery<User[]>({
-        queryKey: ['users'],
-        queryFn: () => axios.get('/api/users').then(res => res.data),
-        staleTime: 60 * 1000,
-        retry: 3
-    })
+    const { data: users, error, isLoading } = useUsers()
+
+    const assignBug = async (userId: string) => {
+        console.log('userId', userId)
+        await axios.patch(`/api/bugs/${bug.id}`, { assignedToUserId: (userId !== 'unset') ? userId : null })
+            .catch(() => {
+                toast.error('Changed could not be saved.')
+            })
+    }
 
     if (error) return null
 
@@ -21,12 +24,7 @@ const AssigneeSelect = ({ bug }: { bug: Bug }) => {
 
     return (
         <>
-            <Select.Root defaultValue={bug.assignedToUserId || 'unset'} onValueChange={async (userId) => {
-                await axios.patch(`/x/bugs/${bug.id}`, { assignedToUserId: (userId !== 'unset') ? userId : null })
-                    .catch(() => {
-                        toast.error('Changed could not be saved.')
-                    })
-            }}>
+            <Select.Root defaultValue={bug.assignedToUserId || 'unset'} onValueChange={(userId) => assignBug(userId)}>
                 <Select.Trigger placeholder='Assign...'></Select.Trigger>
                 <Select.Content>
                     <Select.Group>
@@ -46,5 +44,13 @@ const AssigneeSelect = ({ bug }: { bug: Bug }) => {
         </>
     )
 }
+
+const useUsers = () => useQuery<User[]>({
+    queryKey: ['users'],
+    queryFn: () => axios.get('/api/users').then(res => res.data),
+    staleTime: 60 * 1000,
+    retry: 3
+})
+
 
 export default AssigneeSelect
