@@ -2,9 +2,21 @@ import prisma from '@/prisma/client'
 import { Table, TableCell } from '@radix-ui/themes'
 import { BugStatusBadge, Link } from '@/app/components'
 import BugToolbar from './BugToolbar'
+import { Status } from '@prisma/client'
 
-const BugsPage = async () => {
-    const bugs = await prisma.bug.findMany()
+interface Props {
+    searchParams: { status: Status }
+}
+
+const BugsPage = async ({ searchParams }: Props) => {
+    const statuses = Object.values(Status)
+    console.log('statuses', statuses)
+    const status = statuses.includes(searchParams.status) ? searchParams.status : undefined
+    const bugs = await prisma.bug.findMany({
+        where: {
+            status
+        }
+    })
     return (
         <div>
             <BugToolbar />

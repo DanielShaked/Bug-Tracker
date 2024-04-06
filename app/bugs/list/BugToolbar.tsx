@@ -1,14 +1,16 @@
 import React from 'react'
-import { Button } from '@radix-ui/themes'
+import { Button, Flex } from '@radix-ui/themes'
 import Link from 'next/link'
+import BugStatusFilter from './BugStatusFilter'
 
 const BugToolbar = () => {
     return (
-        <div className='mb-5'>
+        <Flex className='mb-5' justify='between'>
+            <BugStatusFilter />
             <Button>
                 <Link href='/bugs/new'>Add Bug</Link>
             </Button>
-        </div>
+        </Flex>
     )
 }
 
