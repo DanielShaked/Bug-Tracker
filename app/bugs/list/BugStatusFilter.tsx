@@ -40,10 +40,10 @@ const BugStatusFilter = () => {
             }}>
             <Select.Trigger placeholder='Filter By Status...' />
             <Select.Content>
-                {statuses.map((status) => {
+                {statuses.map((status, idx) => {
                     return <Select.Item
                         value={status.value || 'ALL'}
-                        key={status.value}>
+                        key={status.value || 'ALL'}>
                         {status.label}
                     </Select.Item>
                 })}

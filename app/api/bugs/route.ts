@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validation = bugSchema.safeParse(body)
     if (!validation.success)
-        return NextResponse.json(validation.error.format()), { status: 400 }
+        return NextResponse.json(validation.error.format(), { status: 400 })
 
 
     const newBug = await prisma.bug.create({
@@ -22,6 +22,8 @@ export async function POST(request: NextRequest) {
             description: body.description
         }
     })
+
+    console.log('newBug', newBug)
 
     return NextResponse.json(newBug, { status: 201 })
 
