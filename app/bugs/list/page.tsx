@@ -5,9 +5,10 @@ import BugToolbar from './BugToolbar'
 import NextLink from 'next/link'
 import { Bug, Status } from '@prisma/client'
 import { ArrowUpIcon } from '@radix-ui/react-icons'
+import Pagination from '@/app/components/Pagination'
 
 interface Props {
-    searchParams: { status: Status, orderBy: keyof Bug }
+    searchParams: { status: Status, orderBy: keyof Bug, page: 'string' }
 }
 
 const BugsPage = async ({ searchParams }: Props) => {
@@ -32,12 +33,19 @@ const BugsPage = async ({ searchParams }: Props) => {
             .map((column) => column.value)
             .includes(searchParams.orderBy) ? { [searchParams.orderBy]: 'asc' } : undefined
 
+    const page = +(searchParams.page) || 1
+    const pageSize = 8
+
     const bugs = await prisma.bug.findMany({
         where: {
             status
         },
-        orderBy
+        orderBy,
+        skip: (page - 1) * pageSize,
+        take: pageSize
     })
+
+    const bugCount = await prisma.bug.count({ where: { status } })
     return (
         <div>
             <BugToolbar />
@@ -73,6 +81,11 @@ const BugsPage = async ({ searchParams }: Props) => {
                         </Table.Row>)
                 })}</Table.Body>
             </Table.Root>
+            <Pagination
+                pageSize={pageSize}
+                currentPage={page}
+                itemCount={bugCount}
+            />
         </div>
     )
 }
