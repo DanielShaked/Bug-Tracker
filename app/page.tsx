@@ -3,6 +3,7 @@ import Pagination from './components/Pagination'
 import LatestBugs from './LatestBugs'
 import BugSummery from './BugSummery'
 import Prisma from '@/prisma/client'
+import BugChart from './BugChart'
 
 export default async function Home() {
   const open = await Prisma.bug.count({ where: { status: 'OPEN' } })
@@ -12,6 +13,7 @@ export default async function Home() {
     <div>
       <LatestBugs />
       <BugSummery open={open} inProgress={inProgress} closed={closed} />
+      <BugChart open={open} inProgress={inProgress} closed={closed} />
     </div>
   )
 }
