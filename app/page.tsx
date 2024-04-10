@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import Pagination from './components/Pagination'
+import LatestBugs from './LatestBugs'
 
-export default function Home({ searchParams }: { searchParams: { page: string } }) {
+export default function Home() {
   return (
     <div>
-      <Pagination itemCount={20} pageSize={5} currentPage={+searchParams.page} />
+      <LatestBugs />
     </div>
   )
 }
