@@ -1,10 +1,9 @@
-import Image from 'next/image'
-import Pagination from './components/Pagination'
-import LatestBugs from './LatestBugs'
-import BugSummery from './BugSummery'
 import Prisma from '@/prisma/client'
-import BugChart from './BugChart'
 import { Flex, Grid } from '@radix-ui/themes'
+import { Metadata } from 'next'
+import BugChart from './BugChart'
+import LatestBugs from './LatestBugs'
+import BugSummary from './BugSummary'
 
 export default async function Home() {
   const open = await Prisma.bug.count({ where: { status: 'OPEN' } })
@@ -14,10 +13,15 @@ export default async function Home() {
   return (
     <Grid columns={{ initial: '1', md: '2' }} gap='5'>
       <Flex direction='column' gap='5'>
-        <BugSummery open={open} inProgress={inProgress} closed={closed} />
+        <BugSummary open={open} inProgress={inProgress} closed={closed} />
         <BugChart open={open} inProgress={inProgress} closed={closed} />
       </Flex>
       <LatestBugs />
     </Grid>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Bug Tracker - Dashboard',
+  description: ' View a summary of Project Bugs'
 }

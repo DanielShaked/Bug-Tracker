@@ -41,4 +41,13 @@ const BugDetailPage = async ({ params }: Props) => {
     )
 }
 
+export async function generateMetaData({ params }: Props) {
+    const bug = await prisma.bug.findUnique({ where: { id: +params.id } })
+    return {
+        title: bug?.title,
+        description: `Details of bug ${bug?.title}`
+    }
+}
+
+
 export default BugDetailPage

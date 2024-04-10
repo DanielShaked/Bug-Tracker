@@ -8,7 +8,7 @@ interface Props {
     inProgress: number,
     closed: number
 }
-const BugSummery = ({ open, inProgress, closed }: Props) => {
+const BugSummary = ({ open, inProgress, closed }: Props) => {
     const containers: {
         label: string,
         value: number,
@@ -34,4 +34,4 @@ const BugSummery = ({ open, inProgress, closed }: Props) => {
     )
 }
 
-export default BugSummery
+export default BugSummary

@@ -4,6 +4,7 @@ import { Status } from '@prisma/client'
 import BugTable, { BugQuery, columnNames } from './BugTable'
 import BugToolbar from './BugToolbar'
 import { Flex } from '@radix-ui/themes'
+import { Metadata } from 'next'
 
 interface Props {
     searchParams: BugQuery
@@ -47,3 +48,8 @@ const BugsPage = async ({ searchParams }: Props) => {
 export const dynamic = 'force-dynamic'
 // export const revalidate = 0;
 export default BugsPage
+
+export const metadata: Metadata = {
+    title: 'Bug Tracker - list',
+    description: ' View a all Project Bugs'
+}
