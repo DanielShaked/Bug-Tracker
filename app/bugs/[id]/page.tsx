@@ -39,14 +39,14 @@ const BugDetailPage = async ({ params }: Props) => {
     )
 }
 
-export async function generateMetaData({ params }: Props) {
-    const bug = await fetchBug(+params.id)
+// export async function generateMetaData({ params }: Props) {
+//     const bug = await fetchBug(+params.id)
 
-    return {
-        title: bug?.title,
-        description: `Details of bug ${bug?.title}`
-    }
-}
+//     return {
+//         title: bug?.title,
+//         description: `Details of bug ${bug?.title}`
+//     }
+// }
 
 
 export default BugDetailPage
