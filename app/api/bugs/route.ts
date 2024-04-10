@@ -4,6 +4,7 @@ import { bugSchema } from "../../validationSchemas";
 import { getServerSession } from "next-auth";
 import authOptions from "../auth/authOptions";
 
+
 export async function POST(request: NextRequest) {
     const session = getServerSession(authOptions)
     if (!session)
