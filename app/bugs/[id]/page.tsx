@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { cache } from 'react'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
 import { Box, Flex, Grid } from '@radix-ui/themes'
@@ -13,14 +13,12 @@ interface Props {
     params: { id: string }
 }
 
+const fetchBug = cache(async (bugId: number) => await prisma.bug.findUnique(({ where: { id: bugId } })))
+
 const BugDetailPage = async ({ params }: Props) => {
     const session = await getServerSession(authOptions)
 
-    const bug = await prisma.bug.findUnique({
-        where: {
-            id: +params.id
-        }
-    })
+    const bug = await fetchBug(+params.id)
 
     if (!bug)
         notFound()
@@ -42,7 +40,8 @@ const BugDetailPage = async ({ params }: Props) => {
 }
 
 export async function generateMetaData({ params }: Props) {
-    const bug = await prisma.bug.findUnique({ where: { id: +params.id } })
+    const bug = await fetchBug(+params.id)
+
     return {
         title: bug?.title,
         description: `Details of bug ${bug?.title}`
