@@ -5,7 +5,7 @@ import BugStatusFilter from './BugStatusFilter'
 
 const BugToolbar = () => {
     return (
-        <Flex className='mb-5' justify='between'>
+        <Flex justify='between'>
             <BugStatusFilter />
             <Button>
                 <Link href='/bugs/new'>Add Bug</Link>
